@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dog Facts</title>
+    <link rel="stylesheet" href="app.css" />
+    <script defer src="app.js"></script>
+    <h1>Welcome to Random Dog Facts!</h1>
+  </head>
+  <body>
+    <label for="numFacts">How many dog facts you'd like:</label>
+    <input type="number" id="numFacts" min="1" max="10" value="0" />
+    <button id="btnFacts">Get Dog Facts</button>
+    <ul id="dogFactsList"></ul>
+
+    <script>
+      const apiUrl = "https://dog-api.kinduff.com/api/facts";
+      const btnFacts = document.getElementById("btnFacts");
+      const numFacts = document.getElementById("numFacts");
+      const dogFactsList = document.getElementById("dogFactsList");
+      const imgUrl = "https://place.dog/300/200";
+      const image = new Image();
+      image.src = imgUrl;
+      document.body.appendChild(image);
+
+      btnFacts.addEventListener("click", () => {
+        const count = numFacts.value;
+        dogFactsList.innerText = ""; // Clears ul/ refreshes
+        for (let i = 0; i < count; i++) {
+          fetch(apiUrl)
+            .then((response) => response.json())
+            .then((data) => {
+              const fact = document.createElement("li");
+              fact.textContent = data.facts[0];
+              fact.classList.add("fact");
+              dogFactsList.appendChild(fact);
+            })
+            .catch((error) => console.error(error));
+        }
+        image.src = "https://place.dog/300/200?" + new Date().getTime();
+      });
+    </script>
+  </body>
+</html>
