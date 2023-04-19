@@ -15,11 +15,15 @@
     <button id="btnFacts">Get Dog Facts</button>
     <ul id="dogFactsList"></ul>
 
+    <h2>Your Favorite Dog Facts:</h2>
+    <ul id="favoriteFactsList"></ul>
+
     <script>
       const apiUrl = "https://dog-api.kinduff.com/api/facts";
       const btnFacts = document.getElementById("btnFacts");
       const numFacts = document.getElementById("numFacts");
       const dogFactsList = document.getElementById("dogFactsList");
+      const favoriteFactsList = document.getElementById("favoriteFactsList");
       const imgUrl = "https://place.dog/300/200";
       const image = new Image();
       image.src = imgUrl;
@@ -35,6 +39,17 @@
               const fact = document.createElement("li");
               fact.textContent = data.facts[0];
               fact.classList.add("fact");
+
+              const favoriteButton = document.createElement("button");
+              favoriteButton.textContent = "Add to Favorites";
+              favoriteButton.addEventListener("click", () => {
+                const favoriteFact = document.createElement("li");
+                favoriteFact.textContent = fact.textContent;
+                favoriteFact.classList.add("fact");
+                favoriteFactsList.appendChild(favoriteFact);
+              });
+
+              fact.appendChild(favoriteButton);
               dogFactsList.appendChild(fact);
             })
             .catch((error) => console.error(error));
