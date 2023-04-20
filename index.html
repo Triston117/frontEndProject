@@ -12,13 +12,14 @@
   <body>
     <label for="numFacts">How many dog facts you'd like:</label>
     <input type="number" id="numFacts" min="1" max="10" value="0" />
-    <button id="btnFacts">Get Dog Facts</button>
+    <button id="btnFacts">Get Dog Facts!</button>
     <ul id="dogFactsList"></ul>
 
     <h2>Your Favorite Dog Facts</h2>
     <ul id="favoriteFactsList"></ul>
 
     <script>
+      //Declarations
       const apiUrl = "https://dog-api.kinduff.com/api/facts";
       const btnFacts = document.getElementById("btnFacts");
       const numFacts = document.getElementById("numFacts");
@@ -29,6 +30,7 @@
       image.src = imgUrl;
       document.body.appendChild(image);
 
+      //button event
       btnFacts.addEventListener("click", () => {
         const count = numFacts.value;
         dogFactsList.innerText = ""; // Clears ul/ refreshes
@@ -41,11 +43,21 @@
               fact.classList.add("fact");
 
               const favoriteButton = document.createElement("button");
+              //adding favorite button
               favoriteButton.textContent = "Add to Favorites";
               favoriteButton.addEventListener("click", () => {
                 const favoriteFact = document.createElement("li");
                 favoriteFact.textContent = fact.textContent;
                 favoriteFact.classList.add("fact");
+
+                //remove favorite button
+                const removeButton = document.createElement("button");
+                removeButton.textContent = "Remove from Favorites";
+                removeButton.addEventListener("click", () => {
+                  favoriteFactsList.removeChild(favoriteFact);
+                });
+
+                favoriteFact.appendChild(removeButton);
                 favoriteFactsList.appendChild(favoriteFact);
               });
 
