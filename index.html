@@ -18,6 +18,9 @@
     <h2>Your Favorite Dog Facts</h2>
     <ul id="favoriteFactsList"></ul>
 
+    <label for="searchFacts">Search for a fact:</label>
+    <input type="text" id="searchFacts" />
+
     <script>
       //Declarations
       const apiUrl = "https://dog-api.kinduff.com/api/facts";
@@ -29,6 +32,8 @@
       const image = new Image();
       image.src = imgUrl;
       document.body.appendChild(image);
+
+      const searchFacts = document.getElementById("searchFacts");
 
       //button event
       btnFacts.addEventListener("click", () => {
@@ -60,13 +65,26 @@
                 favoriteFact.appendChild(removeButton);
                 favoriteFactsList.appendChild(favoriteFact);
               });
-
+              // publish
               fact.appendChild(favoriteButton);
               dogFactsList.appendChild(fact);
             })
             .catch((error) => console.error(error));
         }
         image.src = "https://place.dog/300/200?" + new Date().getTime();
+      });
+      // search event- Half fixed
+      searchFacts.addEventListener("input", () => {
+        const searchValue = searchFacts.value.toLowerCase();
+        const facts = document.querySelectorAll(".fact");
+        facts.forEach((fact) => {
+          const factText = fact.textContent.toLowerCase();
+          if (factText.includes(searchValue)) {
+            fact.style.display = "block";
+          } else {
+            fact.style.display = "none";
+          }
+        });
       });
     </script>
     <hr />
